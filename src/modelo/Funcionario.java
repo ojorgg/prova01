@@ -11,6 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@NamedQueries({
+    @NamedQuery(name = "Funcionario.FindByLogin", query = "SELECT f FROM Funcionario f WHERE f.login = :login")
+})
 
 @Entity(name = "Funcionario")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -25,7 +31,7 @@ public class Funcionario implements Serializable {
 
     @Column(name = "nome")
     private String nome;
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     private String login;
 
     @Column(insertable = false, updatable = false)
@@ -37,11 +43,10 @@ public class Funcionario implements Serializable {
     public Funcionario() {
     }
 
-    public Funcionario(int idFuncionario, String nome, String login, String tipo) {
-        this.idFuncionario = idFuncionario;
+    public Funcionario(String nome, String login, double salario) {
         this.nome = nome;
         this.login = login;
-        this.tipo = tipo;
+        this.salario = salario;
     }
 
     public int getIdFuncionario() {
@@ -74,6 +79,14 @@ public class Funcionario implements Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
     }
 
 }
