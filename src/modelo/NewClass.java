@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -30,6 +31,8 @@ public class NewClass {
         adicionarGerente("Jorge", "Jorgg2", 100, 20);
         adicionarComissionados("Jorge", "Jorgg4", 100, 20);
         adicionarComissionados("Jorge", "Jorgg4", 100, 20);
+
+        // aumentaSalario(10); - nao funcionou
     }
 
     public boolean existsLogin(String login) {
@@ -162,6 +165,19 @@ public class NewClass {
 
         TypedQuery<Funcionario> query = em.createQuery("SELECT v FROM Funcionario v", Funcionario.class);
         List<Funcionario> carros = query.getResultList();
+
+        em.close();
+    }
+
+    private static void aumentaSalario(double valor) {
+
+        EntityManager em = emf.createEntityManager();
+
+        Query query = em.createQuery("Funcionario.UpdateSalario",
+                Funcionario.class);
+        query.setParameter("aumento", valor);
+
+        query.executeUpdate();
 
         em.close();
     }

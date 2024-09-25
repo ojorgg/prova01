@@ -14,8 +14,10 @@ import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+
 @NamedQueries({
-    @NamedQuery(name = "Funcionario.FindByLogin", query = "SELECT f FROM Funcionario f WHERE f.login = :login")
+    @NamedQuery(name = "Funcionario.FindByLogin", query = "SELECT f FROM Funcionario f WHERE f.login = :login"),
+    @NamedQuery(name = "Funcionario.UpdateSalario", query = "UPDATE Funcionario f SET f.salario = f.salario * :aumento")
 })
 
 @Entity(name = "Funcionario")
